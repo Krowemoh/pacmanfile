@@ -90,6 +90,12 @@ function dump {
 }
 
 function sync {
+  pacmanfile_file="${pacmanfile_dir}/pacmanfile.txt"
+  if [ ! -f "$pacmanfile_file" ]; then
+    echo "File missing: ${pacmanfile_dir}/pacmanfile.txt"
+    exit 1
+  fi
+
   pacmanfile_packages=$(sort --unique "${pacmanfile_dir}"/pacmanfile*.txt | grep -E '^[^#].*')
   installed_packages=$($package_manager --query --explicit --quiet | sort --unique)
 
